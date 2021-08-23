@@ -3,20 +3,24 @@ apiVersion: apps/v1 #we know the communication to your k8s strictly happen throu
 kind: Deployment #this is the type of API Service Pod Secret PresistentVOlume
 metadata:
   name: myapp3-deployment #this is the name of the deployment which will be created
-
-spec:
-  replicas: 3
-  selector:
+  label:
+    app: myapp
+spec: #this is deployment specification
+  replicas: 3 #inside this deployment it will create three pod
+  #it will create autmatically a replicaset of three pod but a naming convention to be given to this rs
+  #which is done by k8s by giving him an hashvalue. 
+  selector: #spec.selector.matchlabels whic h is a key valu pairs. 
     matchLabels:
-      app: myapp
-  template:
+      app: myapp #using this label
+  template: #pod as of now blank we need to deploy an image an create a container inside the pod
+             #all the pod will have similar configuration
     metadata:
       name: myaap3-pod
-      labels:
-        app: myapp
-    spec:
+      labels: #the same label which we have define inside my pod here also we define the same. 
+        app: myapp 
+    spec: #this si specification about the container
       containers:
         - name: myapp3-container
-          image: stacksimplify/kubenginx:3.0.0
+          image: stacksimplify/kubenginx:3.0.0 #every pod will have this image and a runing container
           ports:
-            - containerPort: 80
+            - containerPort: 80 #internal port of your container  running on kubernetes cluster. 
