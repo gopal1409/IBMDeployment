@@ -1,7 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+#kubectl apply -f nameofthemanifestfile
+apiVersion: apps/v1 #we know the communication to your k8s strictly happen through api gateway
+kind: Deployment #this is the type of API Service Pod Secret PresistentVOlume
 metadata:
-  name: myapp3-deployment
+  name: myapp3-deployment #this is the name of the deployment which will be created
 
 spec:
   replicas: 3
