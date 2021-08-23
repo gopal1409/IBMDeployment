@@ -12,7 +12,7 @@ spec:
     metadata:
       name: myaap3-pod
       labels:
-        app: myapp3
+        app: myapp
     spec:
       containers:
         - name: myapp3-container
