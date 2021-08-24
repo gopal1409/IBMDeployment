@@ -9,6 +9,6 @@ spec:
     #this 10Gi is thin provision. max limit i have put 10Gi. but i am using as of now 3GB it will consume 3GB of storage. 
     #it will expand max 10Gi
   accessModes:
-    - ReadWriteOnce #ReadWriteMany #Read
+    - ReadWriteOnce #ReadWriteMany #Read #- any of yaml file it is list ccomes from python . but k8s is go lang but go lang come from python
   hostPath:
     path: /mnt/data
