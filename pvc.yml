@@ -6,6 +6,6 @@ spec:
   storageClassName: nodestorage 
   resources:
     requests:
-      storage: 10Gi
+      storage: 10Gi 
   accessModes:
     - ReadWriteOnce
