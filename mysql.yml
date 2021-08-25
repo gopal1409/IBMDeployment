@@ -17,7 +17,7 @@ spec:
     spec:
       containers: #this is container specification
         - name: mysql
-          image: mysql: 5.6
+          image: mysql:5.6
           env:
           - name: MYSQL_ROOT_PASSWORD #secret managed in kubernetes
             valueFrom:
