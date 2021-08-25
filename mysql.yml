@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql 
+  
+spec:
+  replicas: 1 #if you dont give and your pod goes down k8s will not make it up autmatically. 
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers: #this is container specification
+        - name: mysql
+          image: mysql: 5.6
+          env:
+          - name: MYSQL_ROOT_PASSWORD #secret managed in kubernetes
+            valueFrom:
+              secretKeyRef:
+                name: mysql-db-password
+                key: password 
+          ports:
+            - containerPort: 3306
+            #this volume mount is inside your pod. 
+          volumeMounts:
+            - name: mysql-persistent-volume #the refrence is given
+              mountPath: /var/lib/mysql
+            - name: usermanagement-db-creation-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes: #volume switch it is storage specification
+        - name: mysql-persistent-volume #the same refrence i have used inside my volume block
+          persistentVolumeClaim:
+            claimName: task-pv-claim  #this si the name of claim
+        - name: usermanagement-db-creation-script #configmap are being store in kubernetes as volumes. 
+          configMap:
+            name: usermanagement-db-creation-script

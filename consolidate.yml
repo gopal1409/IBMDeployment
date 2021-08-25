@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: nodestorage 
+  resources:
+    requests:
+      storage: 10Gi 
+  accessModes:
+    - ReadWriteOnce
+--- 
+apiVersion: v1
+kind: PersistentVolume 
+metadata:
+  name: task-pv-volume
+spec:
+  storageClassName: nodestorage
+  capacity:
+    storage: 10Gi #we are consuming 10Gb of stroage
+    #this 10Gi is thin provision. max limit i have put 10Gi. but i am using as of now 3GB it will consume 3GB of storage. 
+    #it will expand max 10Gi
+  accessModes:
+    - ReadWriteOnce #ReadWriteMany #Read #- any of yaml file it is list ccomes from python . but k8s is go lang but go lang come from python
+  hostPath:
+    path: /mnt/data
+--- 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usermanagement-db-creation-script
+data:
+  mysql_usermgmt.sql: |-
+    DROP DATABASE IF EXISTS webappdb;
+    CREATE DATABASE webappdb;
+--- 
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-db-password
+type: Opaque
+data:
+  password: ZGJwYXNzd29yZDEx
+
+  #this will create an secret store it in etcd as key value format
