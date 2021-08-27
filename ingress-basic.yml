@@ -1,15 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginxapp-ingress-service
+  name: nginxapp1-ingress-service
 spec:
   rules:
   - http:
       paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app2-nginx-clusterip-service #service based routing
+            port:
+              number: 80
       - path: /app1/
         pathType: Prefix
         backend:
           service:
-            name: app1-nginx-clusterip-service
+            name: app1-nginx-clusterip-service #service based routing
             port:
-              number: 80
+              number: 80        
